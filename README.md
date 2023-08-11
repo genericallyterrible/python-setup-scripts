@@ -1,7 +1,7 @@
 ## Powershell
 
 ### Notes
-- Windows only due to use of [`winget`](https://learn.microsoft.com/en-us/windows/package-manager/winget/) to install packages.
+- Windows-only due to use of [`winget`](https://learn.microsoft.com/en-us/windows/package-manager/winget/) to install packages.
 - You may have to run `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned` in a non-admin PowerShell window before running the code below.
 
 ### How-To
