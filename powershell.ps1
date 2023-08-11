@@ -277,7 +277,7 @@ function Get-VSCodeExtensions {
 
 function Invoke-Setup {
     if (-not (Test-RunningAsAdmin)) {
-        Throw "Please run this script as an admin. Right click start, Powershell (Admin)"
+        Throw "Please run this script as an admin. Right click start, Powershell (Admin), and run '`$HOME/py_setup_script.ps1'."
     }
 
     $pythonVersion = 3.11.4
