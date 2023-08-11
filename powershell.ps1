@@ -255,23 +255,23 @@ function Get-VSCodeExtensions {
         "ms-python.vscode-pylance",
         "ms-python.python"
     )
-    $optionalExtensions = @(
-        ""
-    )
+    # $optionalExtensions = @(
+    #     ""
+    # )
 
-    if (Invoke-YesNoPrompt "Would you like to install optional VS Code Extensions?" -y) {
-        if (Invoke-YesNoPrompt "Install all optional packages?" -y) {
-            $extensionIDs += $optionalExtensions
-        }
-        else {
-            Write-Host "Please select the optional packages you wish to install."
-            foreach ($extensionID in $optionalExtensions) {
-                if (Invoke-YesNoPrompt "$extensionID" -y) {
-                    $extensionIDs += $extensionID
-                }
-            }
-        }
-    }
+    # if (Invoke-YesNoPrompt "Would you like to install optional VS Code Extensions?" -y) {
+    #     if (Invoke-YesNoPrompt "Install all optional packages?" -y) {
+    #         $extensionIDs += $optionalExtensions
+    #     }
+    #     else {
+    #         Write-Host "Please select the optional packages you wish to install."
+    #         foreach ($extensionID in $optionalExtensions) {
+    #             if (Invoke-YesNoPrompt "$extensionID" -y) {
+    #                 $extensionIDs += $extensionID
+    #             }
+    #         }
+    #     }
+    # }
     return $extensionIDs
 }
 
