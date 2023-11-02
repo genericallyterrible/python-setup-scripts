@@ -280,7 +280,7 @@ function Invoke-Setup {
         Throw "Please run this script as an admin. Right click start, Powershell (Admin), and run '`$HOME/py_setup_script.ps1'."
     }
 
-    $pythonVersion = 3.11.4
+    $pythonVersion = 3.12.0
 
     # ID list of winget applicatoins to install
     $packageIDs = Get-SelectedWingetApps
