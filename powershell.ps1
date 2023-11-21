@@ -150,6 +150,12 @@ function Add-ToUserPath {
     }
 }
 
+function Set-PipRequireVirtualEnv {
+    param ([bool]$require)
+
+    [Environment]::SetEnvironmentVariable("PIP_REQUIRE_VIRTUALENV", "$require", "User")
+}
+
 function Install-WinGetApp {
     param ([string]$PackageID)
 
@@ -246,17 +252,19 @@ function Get-VSCodeExtensions {
     # ID list of all VS Code extensions to install
     $extensionIDs = @(
         "njpwerner.autodocstring",
-        "ms-python.black-formatter",
+        "charliermarsh.ruff",
+        # "ms-python.black-formatter",
         "tamasfe.even-better-toml",
         "mhutchie.git-graph",
-        "ms-python.isort",
+        # "ms-python.isort",
         "ms-toolsai.datawrangler",
         "ms-toolsai.jupyter",
         "ms-python.vscode-pylance",
         "ms-python.python"
     )
     # $optionalExtensions = @(
-    #     ""
+    #     "ms-toolsai.jupyter"
+    #     "ryanluker.vscode-coverage-gutters"
     # )
 
     # if (Invoke-YesNoPrompt "Would you like to install optional VS Code Extensions?" -y) {
@@ -280,7 +288,7 @@ function Invoke-Setup {
         Throw "Please run this script as an admin. Right click start, Powershell (Admin), and run '`$HOME/py_setup_script.ps1'."
     }
 
-    $pythonVersion = 3.12.0
+    $pythonVersion = "3.12.0"
 
     # ID list of winget applicatoins to install
     $packageIDs = Get-SelectedWingetApps
@@ -310,15 +318,27 @@ function Invoke-Setup {
         Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
     
         Update-Path
-    
+    }
+
+    if (-not (Test-CommandExists "python")) {
         pyenv install $pythonVersion
         pyenv global $pythonVersion
+        Update-Path
+    }
+
+    Set-PipRequireVirtualEnv $true
+
+    if (-not (Test-CommandExists "pipx")) {
+        Write-Host "Installing pipx"
+        Set-PipRequireVirtualEnv $false
+        pip install pipx
+        Set-PipRequireVirtualEnv $true
+        Update-Path
     }
 
     if (-not (Test-CommandExists "poetry")) {
         Write-Host "Installing Poetry"
-        (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python3 -
-        Add-ToUserPath "%appdata%\pypoetry\venv\Scripts\"
+        pipx install poetry
     
         Update-Path
 
