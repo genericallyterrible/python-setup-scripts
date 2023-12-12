@@ -344,6 +344,7 @@ function Invoke-Setup {
 
         # Config poetry to put venvs in project roots instead of the default cache dir
         poetry config virtualenvs.in-project true
+        poetry config virtualenvs.prefer-active-python true
     }
 
 
