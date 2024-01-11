@@ -154,6 +154,7 @@ function Set-PipRequireVirtualEnv {
     param ([bool]$require)
 
     [Environment]::SetEnvironmentVariable("PIP_REQUIRE_VIRTUALENV", "$require", "User")
+	$env:PIP_REQUIRE_VIRTUALENV = "$require"
 }
 
 function Install-WinGetApp {
