@@ -154,7 +154,7 @@ function Set-PipRequireVirtualEnv {
     param ([bool]$require)
 
     [Environment]::SetEnvironmentVariable("PIP_REQUIRE_VIRTUALENV", "$require", "User")
-	$env:PIP_REQUIRE_VIRTUALENV = "$require"
+    $env:PIP_REQUIRE_VIRTUALENV = "$require"
 }
 
 function Install-WinGetApp {
@@ -333,6 +333,7 @@ function Invoke-Setup {
         Write-Host "Installing pipx"
         Set-PipRequireVirtualEnv $false
         pip install pipx
+        pipx ensurepath
         Set-PipRequireVirtualEnv $true
         Update-Path
     }
